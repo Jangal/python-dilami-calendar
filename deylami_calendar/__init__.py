@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-from .deylami_datetime import DeylamiDate
+from .deylami_datetime import DeylamiDatetime
 from .constants import *
 
-__version__ = '3.0.17'
+__version__ = '1.0.0'
