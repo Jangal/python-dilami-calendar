@@ -1,3 +1,6 @@
+from khayyam.algorithms_pure import is_jalali_leap_year
+
+
 def jalali_to_deylami(jy, jm, jd, mod: str = ''):
     if jm < 5 or (jm == 5 and jd < 17):
         dy = jy + 194
@@ -7,9 +10,7 @@ def jalali_to_deylami(jy, jm, jd, mod: str = ''):
 
     dd, dm, k = 0, 0, 0
 
-    kabise = [1, 5, 9, 13, 17, 22, 26, 30]
-
-    if (jy - 1) % 33 in kabise:
+    if is_jalali_leap_year(jy):
         dd, dm, k = 6, 0, 1
 
     if jm == 5:
@@ -82,9 +83,8 @@ def deylami_to_jalali(dy, dm, dd, mod: str = ''):
         jy = dy - 194
 
     k = 0
-    kabise = (1, 5, 9, 13, 17, 22, 26, 30)
 
-    if ((jy - 1) % 33) in kabise:
+    if is_jalali_leap_year(jy):
         k = 1
 
     if dm == 0 and dd == 0:
@@ -148,3 +148,17 @@ def deylami_to_jalali(dy, dm, dd, mod: str = ''):
         jd = dd + 17 if dd <= 14 else dd - 14
 
     return jy, jm, jd if mod == '' else mod.join((str(jy), str(jm), str(jd)))
+
+
+def get_days_in_deylami_month(year, month):
+    if 1 <= month <= 12:
+        return 1, 30
+
+    assert month == 0, 'Month must be between 0 and 12 but 0 is after 8'
+
+    jy = year - 194
+    # Panjik (پنجیک)
+    if is_jalali_leap_year(jy):
+        return 0, 5
+    else:
+        return 1, 5
