@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
 
 DEYLAMI_WEEKDAY_NAMES = {
-    0: "یکشمبه",
-    1: "دۊشمبه",
-    2: "سۊشمبه",
-    3: "چارشمبه",
-    4: "پئنشمبه",
-    5: "جۊمه",
-    6: "شمبه"
+    0: "شمبه",
+    1: "یکشمبه",
+    2: "دۊشمبه",
+    3: "سۊشمبه",
+    4: "چارشمبه",
+    5: "پئنشمبه",
+    6: "جۊمه"
 }
 
 DEYLAMI_MONTH_NAMES = {
@@ -25,3 +24,10 @@ DEYLAMI_MONTH_NAMES = {
     11: "ورفن ٚ ما",
     12: "اسفندار ما"
 }
+
+
+#: Minimum year supported by the library.
+MINYEAR = 195
+
+#: Maximum year supported by the library.
+MAXYEAR = 3372
