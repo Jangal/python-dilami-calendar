@@ -10,9 +10,25 @@ with open(os.path.join(os.path.dirname(__file__), 'deylami_calendar', '__init__.
 setup(
     name="deylami_calendar",
     version=package_version,
+    long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
+    url='http://github.com/jangal/python-deylami-calendar',
     author="Jangal",
     install_requires=[
         'khayyam~=3.0.17'
+    ],
+    classifiers=[
+        "Programming Language :: Python",
+        "Development Status :: 3 - Alpha",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
+        "Intended Audience :: Developers",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Software Development :: Localization"
     ],
     packages=find_packages()
 )
