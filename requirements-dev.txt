@@ -1,0 +1,4 @@
+coverage
+coveralls
+freezegun
+nose
