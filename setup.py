@@ -10,6 +10,7 @@ with open(os.path.join(os.path.dirname(__file__), 'deylami_calendar', '__init__.
 setup(
     name="deylami_calendar",
     version=package_version,
+    description='Deylami (Gilaki) calendar for python',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='http://github.com/jangal/python-deylami-calendar',
