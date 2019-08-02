@@ -1,0 +1,30 @@
+language:
+  python
+
+python:
+  - 3.6
+
+before_install:
+  - pip install -U pip setuptools wheel
+  - pip install -r requirements-dev.txt
+  - pip install --upgrade pytest
+
+install:
+  pip install -e .
+
+script:
+  py.test -vv --cov-report term-missing:skip-covered --cov=deylami_calendar
+
+after_success:
+  coveralls
+
+deploy:
+  provider: pypi
+  user: "meyt"
+  password:
+    secure: "PF30+XfTNDdWcCuCqHL1YRa5ENuc7ISQrbLLlDPDYPruCrvdlgz2VvDTr3oBUC4GHIlFEkh6Jwty9zdf5cK+MFOEHuZ9HXdaL/Tp0STK71buKqRRVcK5MSSSzS1jAvfikNaB5zCixIk/zlXXUl7miEDypvA71gGUwPA1VZv948/hW20WHxI9hUojw6ThZAdrY0Dz7ZpAifbtAU8j0H6OvOH0slOpEl2lhmJkXzFY5D4sRevBfs1lcGY3QAIGpp1JAq1P9ehvDBI0AZo0ok/OGPY7BKeyUP6SDYHNg6+7f3ZQfo9mCOu4wj3ChqWaquxhtWVECTxvIO4zyrRO8HasVuf0qNyZN/o9GNtJMUMqqBkbOpAu6MQmZrDf8khWEJoiFumUnj7jh8ylhB1zHvt47T1bVWxOc/eDbvO9wfK+98mFBF0srTVTx+s4U+mGwADZSCE5LDgUxXi5pFNpUXjZf2dOcyPn4mFKCYPUy1W2EJdv+bE2vHXGWFDVeFVAQJeon0VZ7Kd62O/4PiGmHY46ikwxLMgR5WAJCq15vhfe3mJiqzB0nVEAN0YK77voapwYM+OxI9Z8Z9uMtRZ6sV6GanfuR0OykX/VySjAeOcBhKNw8eg1I0QA8YNz8wHpSwGU4ws6a8cwW+FE6tHX3ziEK8DsiBQySD3Ob/9uAmgSD14="
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+  skip-cleanup: true
+  skip_existing: true
