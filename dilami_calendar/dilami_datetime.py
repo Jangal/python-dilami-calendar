@@ -1,28 +1,28 @@
 from datetime import datetime, time
 from khayyam import JalaliDatetime
 from .pure_algorithms import (
-    deylami_to_jalali,
-    jalali_to_deylami,
-    get_days_in_deylami_month
+    dilami_to_jalali,
+    jalali_to_dilami,
+    get_days_in_dilami_month
 )
 from .constants import (
-    DEYLAMI_WEEKDAY_NAMES,
-    DEYLAMI_MONTH_NAMES,
+    DILAMI_WEEKDAY_NAMES,
+    DILAMI_MONTH_NAMES,
     MAXYEAR,
     MINYEAR
 )
 
 
-class DeylamiDatetime:
+class DilamiDatetime:
     """
-    Represent date in Deylami
+    Represent date in Dilami
 
     The first parameter can be :py:class:`datetime.date`
                             or :py:class:`khayyam.JalaliDate`.
 
-    :param year: deylami year
-    :param month: deylami month 0-12
-    :param day: deylami day 0-30
+    :param year: dilami year
+    :param month: dilami month 0-12
+    :param day: dilami day 0-30
     :param hour: 0-23
     :param minute: 0-59
     :param second: 0-59
@@ -30,7 +30,7 @@ class DeylamiDatetime:
     :param tzinfo: Timezone info
 
     :type year: :py:class:`int` | :py:class:`datetime.date`
-                                | :py:class: `DeylamiDatetime`
+                                | :py:class: `DilamiDatetime`
     :type month: int
     :type day: int
     :type hour: int
@@ -38,8 +38,8 @@ class DeylamiDatetime:
     :type second: int
     :type microsecond: int
     :type tzinfo: :py:class:`datetime.tzinfo` | callable
-    :return: A :py:class:`deylami_calendar.DeylamiDatetime` instance.
-    :rtype: :py:class:`deylami.DeylamiDatetime`
+    :return: A :py:class:`dilami_calendar.DilamiDatetime` instance.
+    :rtype: :py:class:`dilami.DilamiDatetime`
 
     """
 
@@ -51,17 +51,17 @@ class DeylamiDatetime:
 
         if isinstance(year, datetime):
             jd = JalaliDatetime(year, tzinfo=tzinfo)
-            year, month, day = jalali_to_deylami(jd.year, jd.month, jd.day)
+            year, month, day = jalali_to_dilami(jd.year, jd.month, jd.day)
             hour, minute, second, microsecond = jd.hour, jd.minute, jd.second, \
                 jd.microsecond
-        elif isinstance(year, DeylamiDatetime):
+        elif isinstance(year, DilamiDatetime):
             dd = year
             year, month, day, hour, minute, second, microsecond = \
                 dd.year, dd.month, dd.day, dd.hour, dd.minute, dd.second, \
                 dd.microsecond
 
         jalali_date_time = JalaliDatetime.now(tzinfo)
-        dy, dm, dd = jalali_to_deylami(
+        dy, dm, dd = jalali_to_dilami(
             jalali_date_time.year, jalali_date_time.month, jalali_date_time.day)
 
         self.year = year if year else dy
@@ -124,13 +124,13 @@ class DeylamiDatetime:
     @classmethod
     def now(cls, tz=None):
         jalali_date = JalaliDatetime.now(tz)
-        dy, dm, dd = jalali_to_deylami(
+        dy, dm, dd = jalali_to_dilami(
             jalali_date.year, jalali_date.month, jalali_date.day)
 
         return cls(dy, dm, dd, tzinfo=tz)
 
     def _to_jalali(self):
-        jy, jm, jd = deylami_to_jalali(self.year, self.month, self.day)
+        jy, jm, jd = dilami_to_jalali(self.year, self.month, self.day)
         jalali_datetime = JalaliDatetime(
             jy, jm, jd, self.hour, self.minute, self.second, self.microsecond,
             tzinfo=self._time.tzinfo)
@@ -167,17 +167,17 @@ class DeylamiDatetime:
 
     def weekdayname(self):
         """
-        :return: The corresponding deylami weekday name: [شمبه - جۊمه]
+        :return: The corresponding Dilami weekday name: [شمبه - جۊمه]
         :rtype: unicode
         """
-        return DEYLAMI_WEEKDAY_NAMES[self.weekday()]
+        return DILAMI_WEEKDAY_NAMES[self.weekday()]
 
     def monthname(self):
         """
         :rtype: unicode
-        :return: The corresponding deylami month name: [پنجیک - اسفندار ما]
+        :return: The corresponding Dilami month name: [پنجیک - اسفندار ما]
         """
-        return DEYLAMI_MONTH_NAMES[self.month]
+        return DILAMI_MONTH_NAMES[self.month]
 
     @staticmethod
     def _validate(year, month, day):
@@ -192,12 +192,12 @@ class DeylamiDatetime:
             raise ValueError(
                 'Month must be between 0 and 12, but it is: %s' % month)
 
-        _days_in_month = get_days_in_deylami_month(year, month)
+        _days_in_month = get_days_in_dilami_month(year, month)
         if day < _days_in_month[0] or day > _days_in_month[1]:
             raise ValueError('Day must be between 0 and %s, but it is: %s'
                              % (_days_in_month, day))
         return year, month, day
 
     def __repr__(self):
-        return 'deylami_calendar.DeylamiDatetime(%s, %s, %s, %s)' % \
+        return 'dilami_calendar.DilamiDatetime(%s, %s, %s, %s)' % \
                (self.year, self.month, self.day, self.weekdayname())

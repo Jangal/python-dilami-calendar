@@ -1,55 +1,55 @@
-# python-deylami-calendar
+# python-dilami-calendar
 
-[![Build Status](https://travis-ci.org/Jangal/python-deylami-calendar.svg?branch=master)](https://travis-ci.org/Jangal/python-deylami-calendar)
+[![Build Status](https://travis-ci.org/Jangal/python-dilami-calendar.svg?branch=master)](https://travis-ci.org/Jangal/python-dilami-calendar)
 
 ## Install
 
 ```bash
-pip install deylami-calendar
+pip install dilami-calendar
 ```
 
 
 ## Usage
 
 
-Get current datetime in deylami
+Get current datetime in Dilami
 
 ```python
-from deylami_calendar import DeylamiDatetime
+from dilami_calendar import DilamiDatetime
 
-print(DeylamiDatetime.now())
+print(DilamiDatetime.now())
 
 ```
 
 
-Convert Gregorian datetime to Deylami
+Convert Gregorian datetime to Dilami
 
 ```python
 from datetime import datetime
-from deylami_calendar import DeylamiDatetime
+from dilami_calendar import DilamiDatetime
 
 gregorian_datetime = datetime(2018, 2, 1)
-deylami_datetime = DeylamiDatetime(gregorian_datetime)
+dilami_datetime = DilamiDatetime(gregorian_datetime)
 
 ```
 
-Convert Deylami to Gregorian datetime
+Convert Dilami to Gregorian datetime
 
 
 ```python
-from deylami_calendar import DeylamiDatetime
+from dilami_calendar import DilamiDatetime
 
-deylami_datetime = DeylamiDatetime(1591, 6, 28)
-gregorian_datetime = deylami_datetime.to_datetime()
+dilami_datetime = DilamiDatetime(1591, 6, 28)
+gregorian_datetime = dilami_datetime.to_datetime()
 ```
 
 
 Read attributes 
 
 ```python
-from deylami_calendar import DeylamiDatetime
+from dilami_calendar import DilamiDatetime
 
-d = DeylamiDatetime().now()
+d = DilamiDatetime().now()
 print(
     d.year,
     d.month,
@@ -64,9 +64,9 @@ Set time-zone
 
 ```python
 import pytz
-from deylami_calendar import DeylamiDatetime
+from dilami_calendar import DilamiDatetime
 
-d = DeylamiDatetime(tzinfo=pytz.timezone('Asia/Tehran')).now()
+d = DilamiDatetime(tzinfo=pytz.timezone('Asia/Tehran')).now()
 print(d)
 
 ```

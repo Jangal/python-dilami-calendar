@@ -1,7 +1,7 @@
 from khayyam.algorithms_pure import is_jalali_leap_year
 
 
-def jalali_to_deylami(jy, jm, jd, mod: str = ''):
+def jalali_to_dilami(jy, jm, jd, mod: str = ''):
     if jm < 5 or (jm == 5 and jd < 17):
         dy = jy + 194
 
@@ -72,7 +72,7 @@ def jalali_to_deylami(jy, jm, jd, mod: str = ''):
     return dy, dm, dd if mod == '' else mod.join((str(dy), str(dm), str(dd)))
 
 
-def deylami_to_jalali(dy, dm, dd, mod: str = ''):
+def dilami_to_jalali(dy, dm, dd, mod: str = ''):
     jy, jm, jd = 0, 0, 0
 
     if dm == 0:
@@ -150,7 +150,7 @@ def deylami_to_jalali(dy, dm, dd, mod: str = ''):
     return jy, jm, jd if mod == '' else mod.join((str(jy), str(jm), str(jd)))
 
 
-def get_days_in_deylami_month(year, month):
+def get_days_in_dilami_month(year, month):
     if 1 <= month <= 12:
         return 1, 30
 

@@ -3,17 +3,18 @@ import os
 from setuptools import find_packages, setup
 
 # reading package version (same way sqlalchemy does)
-with open(os.path.join(os.path.dirname(__file__), 'deylami_calendar', '__init__.py')) as v_file:
+with open(os.path.join(os.path.dirname(__file__), 'dilami_calendar', '__init__.py')) as v_file:
     package_version = re.compile(r".*__version__ = '(.*?)'", re.S).match(v_file.read()).group(1)
 
 
 setup(
-    name="deylami_calendar",
+    name="dilami_calendar",
     version=package_version,
-    description='Deylami (Gilaki) calendar for python',
+    description='Dilami (Gilaki) calendar for python',
+    keywords='dilami deylami daylami gilaki calendar datetime date time conversion',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
-    url='http://github.com/jangal/python-deylami-calendar',
+    url='http://github.com/jangal/python-dilami-calendar',
     author="Jangal",
     install_requires=[
         'khayyam~=3.0.17'

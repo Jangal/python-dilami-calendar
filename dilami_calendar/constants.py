@@ -1,5 +1,5 @@
 
-DEYLAMI_WEEKDAY_NAMES = {
+DILAMI_WEEKDAY_NAMES = {
     0: "شمبه",
     1: "یکشمبه",
     2: "دۊشمبه",
@@ -9,7 +9,7 @@ DEYLAMI_WEEKDAY_NAMES = {
     6: "جۊمه"
 }
 
-DEYLAMI_MONTH_NAMES = {
+DILAMI_MONTH_NAMES = {
     0: "پنجیک",
     1: "نؤرۊز ما",
     2: "کۊرچ ٚ ما",
