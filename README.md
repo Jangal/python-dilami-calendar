@@ -1,6 +1,9 @@
 # python-dilami-calendar
 
 [![Build Status](https://travis-ci.org/Jangal/python-dilami-calendar.svg?branch=master)](https://travis-ci.org/Jangal/python-dilami-calendar)
+![PyPI](https://img.shields.io/pypi/v/dilami-calendar)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/dilami-calendar)
+![GitHub license](https://img.shields.io/github/license/Jangal/python-dilami-calendar)
 
 ## Install
 
