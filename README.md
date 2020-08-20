@@ -74,6 +74,17 @@ print(d)
 
 ```
 
+## Maybe You Like
+[Python Dilami Calendar](https://github.com/Jangal/python-dilami-calendar)
+<br/>
+[C++ Dilami Calendar](https://github.com/LordArma/Dilami-Calendar-C-)
+<br/>
+[Arduino Dilami Calendar](https://github.com/LordArma/Dilami-Calendar-Arduino)
+<br/>
+[.Net Dilami Calendar](https://github.com/Jangal/Dilami-Calendar-.Net)
+<br/>
+[تقویم دیلمی](http://giltime.ir)
+
 
 ## Credits
  
