@@ -1,12 +1,7 @@
 from datetime import date, timedelta
 from khayyam import JalaliDate
 
-from dilami_calendar import (
-    MINYEAR,
-    MAXYEAR,
-    dilami_to_jalali,
-    jalali_to_dilami,
-)
+from dilami_calendar import MAXYEAR, dilami_to_jalali, jalali_to_dilami
 
 
 def test_jalali_to_dilami():

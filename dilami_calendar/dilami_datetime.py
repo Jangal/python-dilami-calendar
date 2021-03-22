@@ -1,15 +1,15 @@
 from datetime import datetime, time
 from khayyam import JalaliDatetime
 from .pure_algorithms import (
-    dilami_to_jalali,
-    jalali_to_dilami,
-    get_days_in_dilami_month
+    dilami_to_jalali as d2j,
+    jalali_to_dilami as j2d,
+    get_days_in_dilami_month,
 )
 from .constants import (
     DILAMI_WEEKDAY_NAMES,
     DILAMI_MONTH_NAMES,
     MAXYEAR,
-    MINYEAR
+    MINYEAR,
 )
 
 
@@ -43,40 +43,59 @@ class DilamiDatetime:
 
     """
 
-    def __init__(self, year=None, month=None, day=None, hour=None,
-                 minute=None, second=None, microsecond=None, tzinfo=None):
+    def __init__(
+        self,
+        year=None,
+        month=None,
+        day=None,
+        hour=None,
+        minute=None,
+        second=None,
+        microsecond=None,
+        tzinfo=None,
+    ):
 
         if callable(tzinfo):
             tzinfo = tzinfo()
 
         if isinstance(year, datetime):
             jd = JalaliDatetime(year, tzinfo=tzinfo)
-            year, month, day = jalali_to_dilami(jd.year, jd.month, jd.day)
-            hour, minute, second, microsecond = jd.hour, jd.minute, jd.second, \
-                jd.microsecond
+            year, month, day = j2d(jd.year, jd.month, jd.day)
+            hour, minute, second, microsecond = (
+                jd.hour,
+                jd.minute,
+                jd.second,
+                jd.microsecond,
+            )
         elif isinstance(year, DilamiDatetime):
             dd = year
-            year, month, day, hour, minute, second, microsecond = \
-                dd.year, dd.month, dd.day, dd.hour, dd.minute, dd.second, \
-                dd.microsecond
+            year, month, day, hour, minute, second, microsecond = (
+                dd.year,
+                dd.month,
+                dd.day,
+                dd.hour,
+                dd.minute,
+                dd.second,
+                dd.microsecond,
+            )
 
-        jalali_date_time = JalaliDatetime.now(tzinfo)
-        dy, dm, dd = jalali_to_dilami(
-            jalali_date_time.year, jalali_date_time.month, jalali_date_time.day)
+        jdt = JalaliDatetime.now(tzinfo)
+        dy, dm, dd = j2d(jdt.year, jdt.month, jdt.day)
 
         self.year = year if year else dy
         self.month = month if month is not None else dm
         self.day = day if day is not None else dd
         self.year, self.month, self.day = self._validate(
-            self.year, self.month, self.day)
+            self.year, self.month, self.day
+        )
 
-        self._hour = hour if hour else jalali_date_time.hour
-        self._minute = minute if minute else jalali_date_time.minute
-        self._second = second if second else jalali_date_time.second
-        self._microsecond = microsecond if microsecond else \
-            jalali_date_time.microsecond
-        self._time = time(self._hour, self._minute, self._second,
-                          self._microsecond, tzinfo)
+        self._hour = hour if hour else jdt.hour
+        self._minute = minute if minute else jdt.minute
+        self._second = second if second else jdt.second
+        self._microsecond = microsecond if microsecond else jdt.microsecond
+        self._time = time(
+            self._hour, self._minute, self._second, self._microsecond, tzinfo
+        )
 
     # Properties #
     ##############
@@ -124,16 +143,22 @@ class DilamiDatetime:
     @classmethod
     def now(cls, tz=None):
         jalali_date = JalaliDatetime.now(tz)
-        dy, dm, dd = jalali_to_dilami(
-            jalali_date.year, jalali_date.month, jalali_date.day)
+        dy, dm, dd = j2d(jalali_date.year, jalali_date.month, jalali_date.day)
 
         return cls(dy, dm, dd, tzinfo=tz)
 
     def _to_jalali(self):
-        jy, jm, jd = dilami_to_jalali(self.year, self.month, self.day)
+        jy, jm, jd = d2j(self.year, self.month, self.day)
         jalali_datetime = JalaliDatetime(
-            jy, jm, jd, self.hour, self.minute, self.second, self.microsecond,
-            tzinfo=self._time.tzinfo)
+            jy,
+            jm,
+            jd,
+            self.hour,
+            self.minute,
+            self.second,
+            self.microsecond,
+            tzinfo=self._time.tzinfo,
+        )
 
         return jalali_datetime
 
@@ -186,18 +211,27 @@ class DilamiDatetime:
         day = day if isinstance(day, int) else int(day)
 
         if year < MINYEAR or year > MAXYEAR:
-            raise ValueError('Year must be between %s and %s, but it is: %s' %
-                             (MINYEAR, MAXYEAR, year))
+            raise ValueError(
+                "Year must be between %s and %s, but it is: %s"
+                % (MINYEAR, MAXYEAR, year)
+            )
         if month < 0 or month > 12:
             raise ValueError(
-                'Month must be between 0 and 12, but it is: %s' % month)
+                "Month must be between 0 and 12, but it is: %s" % month
+            )
 
         _days_in_month = get_days_in_dilami_month(year, month)
         if day < _days_in_month[0] or day > _days_in_month[1]:
-            raise ValueError('Day must be between 0 and %s, but it is: %s'
-                             % (_days_in_month, day))
+            raise ValueError(
+                "Day must be between 0 and %s, but it is: %s"
+                % (_days_in_month, day)
+            )
         return year, month, day
 
     def __repr__(self):
-        return 'dilami_calendar.DilamiDatetime(%s, %s, %s, %s)' % \
-               (self.year, self.month, self.day, self.weekdayname())
+        return "dilami_calendar.DilamiDatetime(%s, %s, %s, %s)" % (
+            self.year,
+            self.month,
+            self.day,
+            self.weekdayname(),
+        )

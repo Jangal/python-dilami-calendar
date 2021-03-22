@@ -73,7 +73,7 @@ def jalali_to_dilami(jy, jm, jd):
     return dy, dm, dd
 
 
-def dilami_to_jalali(dy, dm, dd, mod: str = ''):
+def dilami_to_jalali(dy, dm, dd):
     jy, jm, jd = 0, 0, 0
 
     if dm == 0:
@@ -85,13 +85,11 @@ def dilami_to_jalali(dy, dm, dd, mod: str = ''):
 
     if dm == 0 and dd == 0:
         jm, jd = 1, 15
-        return (jy, jm, jd) if mod == '' else mod.join(
-            (str(jy), str(jm), str(jd)))
+        return jy, jm, jd
 
     if dm == 0:
         jm, jd = 1, dd + 15
-        return (jy, jm, jd) if mod == '' else mod.join(
-            (str(jy), str(jm), str(jd)))
+        return jy, jm, jd
 
     if dm == 1:
         jm = 5 if dd <= 15 else 6
@@ -144,18 +142,19 @@ def dilami_to_jalali(dy, dm, dd, mod: str = ''):
         jm = 4 if dd <= 14 else 5
         jd = dd + 17 if dd <= 14 else dd - 14
 
-    return jy, jm, jd if mod == '' else mod.join((str(jy), str(jm), str(jd)))
+    return jy, jm, jd
 
 
 def get_days_in_dilami_month(year, month):
     if 1 <= month <= 12:
         return 1, 30
 
-    assert month == 0, 'Month must be between 0 and 12 but 0 is after 8'
+    if month != 0:
+        raise ValueError("Month must be between 0 and 12 but 0 is after 8")
 
     jy = year - 194
     # Panjik (پنجیک)
     if is_jalali_leap_year(jy):
         return 0, 5
-    else:
-        return 1, 5
+
+    return 1, 5
