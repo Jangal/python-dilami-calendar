@@ -1,17 +1,12 @@
 from khayyam.algorithms_pure import is_jalali_leap_year
 
 
-def jalali_to_dilami(jy, jm, jd, mod: str = ''):
+def jalali_to_dilami(jy, jm, jd):
     if jm < 5 or (jm == 5 and jd < 17):
         dy = jy + 194
 
     else:
         dy = jy + 195
-
-    dd, dm, k = 0, 0, 0
-
-    if is_jalali_leap_year(jy):
-        dd, dm, k = 6, 0, 1
 
     if jm == 5:
         dm = 1 if jd > 16 else 12
@@ -46,14 +41,20 @@ def jalali_to_dilami(jy, jm, jd, mod: str = ''):
         dd = jd - 14 if jd > 14 else jd + 16
 
     elif jm == 1:
-        if k == 1 and jd == 15:
+        is_leap = is_jalali_leap_year(jy)
+
+        if not is_leap and jd == 15:
             dm, dd = 0, 0
-        elif k == 1 and jd < 15:
+
+        elif not is_leap and jd < 15:
             dm, dd = 8, jd + 16
-        elif k == 0 and jd < 16:
+
+        elif is_leap and jd < 16:
             dm, dd = 8, jd + 15
+
         elif 15 < jd < 21:
             dm, dd = 0, jd - 15
+
         elif jd > 20:
             dm, dd = 9, jd - 20
 
@@ -69,7 +70,7 @@ def jalali_to_dilami(jy, jm, jd, mod: str = ''):
         dm = 12 if jd > 17 else 11
         dd = jd - 17 if jd > 17 else jd + 13
 
-    return dy, dm, dd if mod == '' else mod.join((str(dy), str(dm), str(dd)))
+    return dy, dm, dd
 
 
 def dilami_to_jalali(dy, dm, dd, mod: str = ''):
@@ -81,11 +82,6 @@ def dilami_to_jalali(dy, dm, dd, mod: str = ''):
         jy = dy - 195
     else:
         jy = dy - 194
-
-    k = 0
-
-    if is_jalali_leap_year(jy):
-        k = 1
 
     if dm == 0 and dd == 0:
         jm, jd = 1, 15
@@ -126,6 +122,7 @@ def dilami_to_jalali(dy, dm, dd, mod: str = ''):
         jd = dd + 14 if dd <= 16 else dd - 16
 
     elif dm == 8:
+        k = 0 if is_jalali_leap_year(jy) else 1
         jm = 12 if dd <= (15 + k) else 1
         jd = dd + 14 if dd <= (15 + k) else dd - 15 - k
         if k == 1 and dd == 16:

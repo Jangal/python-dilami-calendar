@@ -1,6 +1,11 @@
-from dilami_calendar.pure_algorithms import (
+from datetime import date, timedelta
+from khayyam import JalaliDate
+
+from dilami_calendar import (
+    MINYEAR,
+    MAXYEAR,
     dilami_to_jalali,
-    jalali_to_dilami
+    jalali_to_dilami,
 )
 
 
@@ -17,6 +22,28 @@ def test_jalali_to_dilami():
                 assert 1584 <= dy <= 1589
                 assert 0 <= dm <= 12
                 assert 0 <= dd <= 30
+
+    # incremental check
+    ldd = None
+    ljd = None
+    gdt = date(622, 4, 3)
+    delta = timedelta(days=1)
+    while ldd != (MAXYEAR, 1, 1):
+        gdt = gdt + delta
+        jdt = JalaliDate(gdt)
+        ndd = jalali_to_dilami(jdt.year, jdt.month, jdt.day)
+        njd = dilami_to_jalali(*ndd)
+        assert ndd != ldd
+        assert njd != ljd
+        ldd = ndd
+        ljd = njd
+    assert ldd == (MAXYEAR, 1, 1)
+
+
+def test_leap_year():
+    assert jalali_to_dilami(1399, 12, 29) == (1594, 8, 15)
+    assert jalali_to_dilami(1399, 12, 30) == (1594, 8, 16)
+    assert jalali_to_dilami(1400, 1, 1) == (1594, 8, 17)
 
 
 def test_dilami_to_jalali():
