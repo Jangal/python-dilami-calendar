@@ -33,6 +33,7 @@ def validate_dilami_day(dm):
 def validate_dilami_date(dy, dm, dd):
     validate_dilami_year(dy)
     validate_dilami_month(dm)
+    validate_dilami_day(dd)
     if not is_dilami_leap_year(dy) and dm == 0 and dd == 0:
         raise InvalidVishakError("%s is not leap year (Vishak)")
 
