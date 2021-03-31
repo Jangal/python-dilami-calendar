@@ -1,4 +1,8 @@
-from khayyam.algorithms_pure import is_jalali_leap_year
+from dilami_calendar.constants import DILAMI_LEAP_YEARS
+
+
+def is_dilami_leap_year(y):
+    return y in DILAMI_LEAP_YEARS
 
 
 def jalali_to_dilami(jy, jm, jd):
@@ -41,15 +45,15 @@ def jalali_to_dilami(jy, jm, jd):
         dd = jd - 14 if jd > 14 else jd + 16
 
     elif jm == 1:
-        is_leap = is_jalali_leap_year(jy)
+        is_leap = is_dilami_leap_year(dy)
 
-        if not is_leap and jd == 15:
+        if is_leap and jd == 15:
             dm, dd = 0, 0
 
-        elif not is_leap and jd < 15:
+        elif is_leap and jd < 15:
             dm, dd = 8, jd + 16
 
-        elif is_leap and jd < 16:
+        elif not is_leap and jd < 16:
             dm, dd = 8, jd + 15
 
         elif 15 < jd < 21:
@@ -74,22 +78,16 @@ def jalali_to_dilami(jy, jm, jd):
 
 
 def dilami_to_jalali(dy, dm, dd):
-    jy, jm, jd = 0, 0, 0
-
-    if dm == 0:
-        jy = dy - 194
-    elif dm < 8 or (dm == 8 and dd <= 15):
+    if dm != 0 and (dm < 8 or (dm == 8 and dd <= 15)):
         jy = dy - 195
     else:
         jy = dy - 194
 
     if dm == 0 and dd == 0:
-        jm, jd = 1, 15
-        return jy, jm, jd
+        return jy, 1, 15
 
     if dm == 0:
-        jm, jd = 1, dd + 15
-        return jy, jm, jd
+        return jy, 1, dd + 15
 
     if dm == 1:
         jm = 5 if dd <= 15 else 6
@@ -120,7 +118,7 @@ def dilami_to_jalali(dy, dm, dd):
         jd = dd + 14 if dd <= 16 else dd - 16
 
     elif dm == 8:
-        k = 0 if is_jalali_leap_year(jy) else 1
+        k = 1 if is_dilami_leap_year(dy) else 0
         jm = 12 if dd <= (15 + k) else 1
         jd = dd + 14 if dd <= (15 + k) else dd - 15 - k
         if k == 1 and dd == 16:
@@ -152,9 +150,8 @@ def get_days_in_dilami_month(year, month):
     if month != 0:
         raise ValueError("Month must be between 0 and 12 but 0 is after 8")
 
-    jy = year - 194
     # Panjik (پنجیک)
-    if is_jalali_leap_year(jy):
+    if is_dilami_leap_year(year):
         return 0, 5
 
     return 1, 5
