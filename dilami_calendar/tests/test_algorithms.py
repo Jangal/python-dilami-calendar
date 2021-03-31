@@ -63,6 +63,39 @@ def test_jalali_to_dilami():
                 assert 0 <= dd <= 30
 
 
+def test_dilami_to_jalali():
+    jy, jm, jd = dilami_to_jalali(1592, 12, 15)
+    assert jy == 1398
+    assert jm == 5
+    assert jd == 1
+
+    for dy in range(1584, 1589):
+        for dm in range(1, 12):
+            for dd in range(1, 30):
+                jy, jm, jd = dilami_to_jalali(dy, dm, dd)
+                assert 1389 <= jy <= 1395
+                assert 0 <= jm <= 12
+                assert 0 <= jd <= 31
+
+    # Panjik for leap year
+    assert dilami_to_jalali(1594, 8, 30) == (1400, 1, 14)
+    assert dilami_to_jalali(1594, 0, 0) == (1400, 1, 15)
+    assert dilami_to_jalali(1594, 0, 1) == (1400, 1, 16)
+    assert dilami_to_jalali(1594, 0, 2) == (1400, 1, 17)
+    assert dilami_to_jalali(1594, 0, 3) == (1400, 1, 18)
+    assert dilami_to_jalali(1594, 0, 4) == (1400, 1, 19)
+    assert dilami_to_jalali(1594, 0, 5) == (1400, 1, 20)
+
+    # Panjik for non-leap year
+    assert dilami_to_jalali(1593, 8, 29) == (1399, 1, 14)
+    assert dilami_to_jalali(1593, 8, 30) == (1399, 1, 15)
+    assert dilami_to_jalali(1593, 0, 1) == (1399, 1, 16)
+    assert dilami_to_jalali(1593, 0, 2) == (1399, 1, 17)
+    assert dilami_to_jalali(1593, 0, 3) == (1399, 1, 18)
+    assert dilami_to_jalali(1593, 0, 4) == (1399, 1, 19)
+    assert dilami_to_jalali(1593, 0, 5) == (1399, 1, 20)
+
+
 def test_incremental():
     ldd = None
     ljd = None
