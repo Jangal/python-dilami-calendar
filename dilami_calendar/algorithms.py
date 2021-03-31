@@ -147,9 +147,6 @@ def get_days_in_dilami_month(year, month):
     if 1 <= month <= 12:
         return 1, 30
 
-    if month != 0:
-        raise ValueError("Month must be between 0 and 12 but 0 is after 8")
-
     # Panjik (پنجیک)
     if is_dilami_leap_year(year):
         return 0, 5

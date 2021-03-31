@@ -4,8 +4,7 @@ from freezegun import freeze_time
 from datetime import datetime
 from khayyam import JalaliDatetime, TehranTimezone
 
-from dilami_calendar import DilamiDatetime
-from dilami_calendar.pure_algorithms import dilami_to_jalali
+from dilami_calendar import DilamiDatetime, dilami_to_jalali
 
 
 def test_dilami_date():

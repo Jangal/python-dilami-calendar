@@ -1,6 +1,6 @@
 from datetime import datetime, time
 from khayyam import JalaliDatetime
-from .pure_algorithms import (
+from .algorithms import (
     dilami_to_jalali as d2j,
     jalali_to_dilami as j2d,
     get_days_in_dilami_month,

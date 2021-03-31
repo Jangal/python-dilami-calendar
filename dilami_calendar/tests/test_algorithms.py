@@ -9,7 +9,7 @@ from dilami_calendar import (
     jalali_to_dilami,
     is_dilami_leap_year,
 )
-from dilami_calendar.pure_algorithms import get_days_in_dilami_month
+from dilami_calendar.algorithms import get_days_in_dilami_month
 
 
 def test_month_days():
@@ -88,29 +88,3 @@ def test_leap_year():
     for dy in range(MINYEAR, MAXYEAR + 1):
         jy = dy - 195
         assert is_jalali_leap_year(jy) is is_dilami_leap_year(dy)
-
-
-def test_dilami_to_jalali():
-    jy, jm, jd = dilami_to_jalali(1592, 12, 15)
-    assert jy == 1398
-    assert jm == 5
-    assert jd == 1
-
-    for dy in range(1584, 1589):
-        for dm in range(1, 12):
-            for dd in range(1, 30):
-                jy, jm, jd = dilami_to_jalali(dy, dm, dd)
-                assert 1389 <= jy <= 1395
-                assert 0 <= jm <= 12
-                assert 0 <= jd <= 31
-
-    # Test panjik days for leap years
-    jy, jm, jd = dilami_to_jalali(1587, 0, 2)
-    assert jy == 1393
-    assert jm == 1
-    assert jd == 17
-
-    jy, jm, jd = dilami_to_jalali(1587, 0, 0)
-    assert jy == 1393
-    assert jm == 1
-    assert jd == 15
