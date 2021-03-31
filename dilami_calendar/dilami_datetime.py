@@ -1,16 +1,10 @@
 from datetime import datetime, time
+
 from khayyam import JalaliDatetime
-from .algorithms import (
-    dilami_to_jalali as d2j,
-    jalali_to_dilami as j2d,
-    get_days_in_dilami_month,
-)
-from .constants import (
-    DILAMI_WEEKDAY_NAMES,
-    DILAMI_MONTH_NAMES,
-    MAXYEAR,
-    MINYEAR,
-)
+
+from .algorithms import dilami_to_jalali as d2j, jalali_to_dilami as j2d
+from .validators import validate_dilami_date
+from .constants import DILAMI_WEEKDAY_NAMES, DILAMI_MONTH_NAMES
 
 
 class DilamiDatetime:
@@ -209,23 +203,7 @@ class DilamiDatetime:
         year = year if isinstance(year, int) else int(year)
         month = month if isinstance(month, int) else int(month)
         day = day if isinstance(day, int) else int(day)
-
-        if year < MINYEAR or year > MAXYEAR:
-            raise ValueError(
-                "Year must be between %s and %s, but it is: %s"
-                % (MINYEAR, MAXYEAR, year)
-            )
-        if month < 0 or month > 12:
-            raise ValueError(
-                "Month must be between 0 and 12, but it is: %s" % month
-            )
-
-        _days_in_month = get_days_in_dilami_month(year, month)
-        if day < _days_in_month[0] or day > _days_in_month[1]:
-            raise ValueError(
-                "Day must be between 0 and %s, but it is: %s"
-                % (_days_in_month, day)
-            )
+        validate_dilami_date(year, month, day)
         return year, month, day
 
     def __repr__(self):

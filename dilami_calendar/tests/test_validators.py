@@ -16,14 +16,19 @@ from dilami_calendar import (
 
 def test_validators():
     # date
-    with pytest.raises(InvalidVishakError):
-        assert validate_dilami_date(1593, 0, 0)
-
     with pytest.raises(InvalidPanjikError):
         assert validate_dilami_date(1593, 0, 6)
 
     with pytest.raises(InvalidPanjikError):
         assert validate_dilami_date(1594, 0, 6)
+
+    validate_dilami_date(1593, 0, 1)
+    validate_dilami_date(1593, 0, 2)
+    validate_dilami_date(1593, 0, 3)
+    validate_dilami_date(1593, 0, 4)
+    validate_dilami_date(1593, 0, 5)
+    with pytest.raises(InvalidVishakError):
+        assert validate_dilami_date(1593, 0, 0)
 
     # year
     validate_dilami_year(MINYEAR + 1)
