@@ -75,7 +75,7 @@ print(d)
 ```
 
 ## Maybe You Like
-[Python Dilami Calendar](https://github.com/Jangal/python-dilami-calendar)
+[PHP Dilami Calendar](https://github.com/Jangal/php-dilami-calendar)
 <br/>
 [C++ Dilami Calendar](https://github.com/LordArma/Dilami-Calendar-C-)
 <br/>
