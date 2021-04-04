@@ -9,7 +9,7 @@ DILAMI_WEEKDAY_NAMES = {
 }
 
 DILAMI_MONTH_NAMES = {
-    0: "پنجیک",
+    0: "پنجيک",
     1: "نؤرۊز ما",
     2: "کۊرچ ٚ ما",
     3: "أرئه ما",
